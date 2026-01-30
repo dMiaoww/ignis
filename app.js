@@ -135,7 +135,6 @@ class IgnisApp {
             closeSettings: document.getElementById('close-settings'),
             saveSettings: document.getElementById('save-settings'),
             ghTokenInput: document.getElementById('github-token'),
-            gistIdInput: document.getElementById('gist-id'),
             settingsTitle: document.getElementById('settings-title'),
             settingsDesc: document.getElementById('settings-desc')
         };
@@ -202,49 +201,61 @@ class IgnisApp {
         this.items.settingsTitle.textContent = t.settingsTitle[this.currentLang];
         this.items.settingsDesc.textContent = t.settingsDesc[this.currentLang];
         this.items.saveSettings.textContent = t.saveBtn[this.currentLang];
-
         const learnedSpan = this.items.learnedCountDisplay.nextSibling;
         if (learnedSpan) learnedSpan.textContent = ` ${t.learned[this.currentLang]}`;
     }
 
-    // Cloud Sync Logic
+    // Cloud Sync Logic - Simplified with Auto-Discovery
     async syncProgress(direction = 'push') {
         if (!this.syncState.token) return;
         this.syncState.isSyncing = true;
         this.items.saveSettings.disabled = true;
         this.items.saveSettings.textContent = this.currentLang === 'en' ? "Syncing..." : "同步中...";
 
-        const data = {
-            learnedIds: this.learnedIds,
-            lastDomain: this.lastLearnedDomain,
-            lang: this.currentLang
+        const fileName = 'ignis_data.json';
+        const headers = {
+            'Authorization': `token ${this.syncState.token}`,
+            'Content-Type': 'application/json'
         };
 
         try {
-            const fileName = 'ignis_data.json';
-            let url = 'https://api.github.com/gists';
-            let method = 'POST';
-
-            if (this.syncState.gistId) {
-                url += `/${this.syncState.gistId}`;
-                method = 'PATCH';
+            // 1. Auto-Discovery: Find Gist ID if not known
+            if (!this.syncState.gistId) {
+                const listResp = await fetch('https://api.github.com/gists', { headers });
+                const gists = await listResp.json();
+                const existing = gists.find(g => g.files[fileName]);
+                if (existing) {
+                    this.syncState.gistId = existing.id;
+                    localStorage.setItem('ignis_gist_id', this.syncState.gistId);
+                    direction = 'pull'; // If found, pull first to prevent data loss
+                }
             }
 
+            const url = `https://api.github.com/gists${this.syncState.gistId ? '/' + this.syncState.gistId : ''}`;
+            const method = this.syncState.gistId ? 'PATCH' : 'POST';
+
             if (direction === 'pull' && this.syncState.gistId) {
-                const response = await fetch(url, {
-                    headers: { 'Authorization': `token ${this.syncState.token}` }
-                });
+                const response = await fetch(url, { headers });
                 const gist = await response.json();
-                const remoteData = JSON.parse(gist.files[fileName].content);
-                this.learnedIds = remoteData.learnedIds || [];
-                this.lastLearnedDomain = remoteData.lastDomain || null;
-                this.currentLang = remoteData.lang || this.currentLang;
-                localStorage.setItem('ignis_learned', JSON.stringify(this.learnedIds));
-                localStorage.setItem('ignis_lang', this.currentLang);
-                this.updateStats();
-                this.updateStaticTexts();
-                this.renderSparks();
+                if (gist.files[fileName]) {
+                    const remoteData = JSON.parse(gist.files[fileName].content);
+                    this.learnedIds = remoteData.learnedIds || [];
+                    this.lastLearnedDomain = remoteData.lastDomain || null;
+                    this.currentLang = remoteData.lang || this.currentLang;
+
+                    localStorage.setItem('ignis_learned', JSON.stringify(this.learnedIds));
+                    localStorage.setItem('ignis_lang', this.currentLang);
+                    this.updateStats();
+                    this.updateStaticTexts();
+                    this.renderSparks();
+                }
             } else {
+                const data = {
+                    learnedIds: this.learnedIds,
+                    lastDomain: this.lastLearnedDomain,
+                    lang: this.currentLang
+                };
+
                 const body = {
                     description: "Ignis Knowledge Platform Sync Data",
                     public: false,
@@ -253,10 +264,7 @@ class IgnisApp {
 
                 const response = await fetch(url, {
                     method: method,
-                    headers: {
-                        'Authorization': `token ${this.syncState.token}`,
-                        'Content-Type': 'application/json'
-                    },
+                    headers: headers,
                     body: JSON.stringify(body)
                 });
 
@@ -264,7 +272,6 @@ class IgnisApp {
                 if (gist.id) {
                     this.syncState.gistId = gist.id;
                     localStorage.setItem('ignis_gist_id', gist.id);
-                    this.items.gistIdInput.value = gist.id;
                 }
             }
         } catch (error) {
@@ -519,7 +526,6 @@ class IgnisApp {
 
     openSettings() {
         this.items.ghTokenInput.value = this.syncState.token;
-        this.items.gistIdInput.value = this.syncState.gistId;
         this.items.settingsOverlay.classList.remove('hidden');
     }
 
@@ -529,16 +535,18 @@ class IgnisApp {
 
     handleSaveSettings() {
         const token = this.items.ghTokenInput.value.trim();
-        const gistId = this.items.gistIdInput.value.trim();
+
+        // If token changed, reset gistId to trigger auto-discovery
+        if (token !== this.syncState.token) {
+            this.syncState.gistId = '';
+            localStorage.removeItem('ignis_gist_id');
+        }
 
         this.syncState.token = token;
-        this.syncState.gistId = gistId;
-
         localStorage.setItem('ignis_gh_token', token);
-        localStorage.setItem('ignis_gist_id', gistId);
 
         if (token) {
-            this.syncProgress(gistId ? 'pull' : 'push');
+            this.syncProgress('pull'); // Initial sync is always a pull attempt
         } else {
             alert(this.currentLang === 'en' ? "Token cleared. Local storage will still be used." : "Token 已清除。将仅使用本地存储。");
         }
