@@ -107,15 +107,31 @@
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 25px;" id="settings-desc">
                         Keep your progress across devices using GitHub Gist.</p>
 
-                    <div class="form-group">
-                        <label for="github-token"
-                            style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px;">GitHub
-                            Token (PAT)</label>
-                        <input type="password" id="github-token" class="text-input" placeholder="ghp_xxxxxxxxxxxx">
+                    <div id="sync-setup">
+                        <p style="font-size: 0.85rem; margin-bottom: 20px;" id="sync-status-text">Not connected to
+                            cloud.</p>
+                        <button id="connect-github" class="btn-primary" style="width: 100%;">Connect GitHub</button>
                     </div>
 
-                    <div style="margin-top: 30px; display: flex; gap: 10px;">
-                        <button id="save-settings" class="btn-primary" style="flex: 1;">Save & Sync</button>
+                    <div id="device-flow-display" class="hidden" style="text-align: center; padding: 20px 0;">
+                        <p style="font-size: 0.85rem; margin-bottom: 10px;">Visit <a
+                                href="https://github.com/login/device" target="_blank" id="device-url"
+                                style="color: var(--accent-color); font-weight: 700;">github.com/login/device</a> and
+                            enter:</p>
+                        <div id="device-code"
+                            style="font-size: 2.5rem; font-weight: 800; letter-spacing: 5px; color: var(--accent-color); margin: 20px 0; font-family: 'Courier New', monospace;">
+                            ---- ----</div>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Waiting for authorization...</p>
+                    </div>
+
+                    <div id="sync-active" class="hidden">
+                        <div
+                            style="background: var(--accent-light); padding: 15px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+                            <div style="color: var(--accent-color);">✓</div>
+                            <div style="font-size: 0.85rem;">Connected to GitHub Gist</div>
+                        </div>
+                        <button id="disconnect-github" class="btn-outline"
+                            style="width: 100%; border: 1px solid #ff4d4d; color: #ff4d4d;">Disconnect</button>
                     </div>
                 </div>
             </div>

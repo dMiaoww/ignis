@@ -133,10 +133,15 @@ class IgnisApp {
             settingsBtn: document.getElementById('settings-btn'),
             settingsOverlay: document.getElementById('settings-overlay'),
             closeSettings: document.getElementById('close-settings'),
-            saveSettings: document.getElementById('save-settings'),
-            ghTokenInput: document.getElementById('github-token'),
+            connectBtn: document.getElementById('connect-github'),
+            disconnectBtn: document.getElementById('disconnect-github'),
+            syncSetup: document.getElementById('sync-setup'),
+            syncActive: document.getElementById('sync-active'),
+            deviceDisplay: document.getElementById('device-flow-display'),
+            deviceCodeText: document.getElementById('device-code'),
             settingsTitle: document.getElementById('settings-title'),
-            settingsDesc: document.getElementById('settings-desc')
+            settingsDesc: document.getElementById('settings-desc'),
+            syncStatusText: document.getElementById('sync-status-text')
         };
 
         this.init();
@@ -190,8 +195,9 @@ class IgnisApp {
             markLearned: { en: "Mark as Learned", zh: "标记为已学" },
             alreadyLearned: { en: "✓ Learned", zh: "✓ 已学习" },
             settingsTitle: { en: "Cloud Sync", zh: "云端同步" },
-            settingsDesc: { en: "Keep your progress across devices using GitHub Gist.", zh: "使用 GitHub Gist 在不同设备间同步你的学习进度。" },
-            saveBtn: { en: "Save & Sync", zh: "保存并同步" }
+            settingsDesc: { en: "Keep your progress across devices via GitHub.", zh: "使用 GitHub 在不同设备间同步你的学习进度。" },
+            connectBtn: { en: "Connect GitHub", zh: "连接 GitHub" },
+            statusNotConnected: { en: "Not connected to cloud.", zh: "尚未连接云端。" }
         };
 
         this.items.navDiscovery.textContent = t.discovery[this.currentLang];
@@ -200,34 +206,98 @@ class IgnisApp {
         this.items.heroTitle.innerHTML = this.currentView === 'discovery' ? t.discoveryHero[this.currentLang] : t.recallHero[this.currentLang];
         this.items.settingsTitle.textContent = t.settingsTitle[this.currentLang];
         this.items.settingsDesc.textContent = t.settingsDesc[this.currentLang];
-        this.items.saveSettings.textContent = t.saveBtn[this.currentLang];
+        this.items.connectBtn.textContent = t.connectBtn[this.currentLang];
+        this.items.syncStatusText.textContent = t.statusNotConnected[this.currentLang];
+
         const learnedSpan = this.items.learnedCountDisplay.nextSibling;
         if (learnedSpan) learnedSpan.textContent = ` ${t.learned[this.currentLang]}`;
+
+        this.updateSyncUI();
     }
 
-    // Cloud Sync Logic - Simplified with Auto-Discovery
-    async syncProgress(direction = 'push') {
-        if (!this.syncState.token) return;
-        this.syncState.isSyncing = true;
-        this.items.saveSettings.disabled = true;
-        this.items.saveSettings.textContent = this.currentLang === 'en' ? "Syncing..." : "同步中...";
+    updateSyncUI() {
+        const isConnected = !!this.syncState.token;
+        this.items.syncSetup.classList.toggle('hidden', isConnected);
+        this.items.syncActive.classList.toggle('hidden', !isConnected);
+        this.items.deviceDisplay.classList.add('hidden');
+    }
 
-        const fileName = 'ignis_data.json';
-        const headers = {
-            'Authorization': `token ${this.syncState.token}`,
-            'Content-Type': 'application/json'
-        };
+    // Cloud Sync Logic - GitHub Device Flow
+    static CLIENT_ID = 'Ov23li0HPhvVPhA0N9iP'; // Replace with your real Client ID
+
+    async initiateDeviceFlow() {
+        this.items.syncSetup.classList.add('hidden');
+        this.items.deviceDisplay.classList.remove('hidden');
+        this.items.deviceCodeText.textContent = '.... ....';
 
         try {
-            // 1. Auto-Discovery: Find Gist ID if not known
+            const response = await fetch('https://github.com/login/device/code', {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                body: JSON.stringify({ client_id: IgnisApp.CLIENT_ID, scope: 'gist' })
+            });
+            const data = await response.json();
+
+            if (data.device_code) {
+                this.items.deviceCodeText.textContent = data.user_code;
+                this.pollForToken(data.device_code, data.interval);
+            }
+        } catch (e) {
+            console.error("Device flow failed:", e);
+            this.updateSyncUI();
+            alert(this.currentLang === 'en' ? "Failed to start授权. Try again." : "授权启动失败，请重试。");
+        }
+    }
+
+    async pollForToken(deviceCode, interval) {
+        const poll = async () => {
+            try {
+                const response = await fetch('https://github.com/login/oauth/access_token', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        client_id: IgnisApp.CLIENT_ID,
+                        device_code: deviceCode,
+                        grant_type: 'urn:ietf:params:oauth:grant-type:device_code'
+                    })
+                });
+                const data = await response.json();
+
+                if (data.access_token) {
+                    this.syncState.token = data.access_token;
+                    localStorage.setItem('ignis_gh_token', data.access_token);
+                    this.updateSyncUI();
+                    this.syncProgress('pull');
+                    return;
+                }
+
+                if (data.error === 'authorization_pending') {
+                    setTimeout(poll, (interval || 5) * 1000);
+                } else {
+                    this.updateSyncUI(); // Reset if timeout or other error
+                }
+            } catch (e) {
+                this.updateSyncUI();
+            }
+        };
+        poll();
+    }
+
+    async syncProgress(direction = 'push') {
+        if (!this.syncState.token) return;
+
+        const fileName = 'ignis_data.json';
+        const headers = { 'Authorization': `token ${this.syncState.token}`, 'Accept': 'application/vnd.github.v3+json' };
+
+        try {
             if (!this.syncState.gistId) {
                 const listResp = await fetch('https://api.github.com/gists', { headers });
                 const gists = await listResp.json();
-                const existing = gists.find(g => g.files[fileName]);
+                const existing = (gists && gists.find) ? gists.find(g => g.files[fileName]) : null;
                 if (existing) {
                     this.syncState.gistId = existing.id;
                     localStorage.setItem('ignis_gist_id', this.syncState.gistId);
-                    direction = 'pull'; // If found, pull first to prevent data loss
+                    direction = 'pull';
                 }
             }
 
@@ -237,52 +307,36 @@ class IgnisApp {
             if (direction === 'pull' && this.syncState.gistId) {
                 const response = await fetch(url, { headers });
                 const gist = await response.json();
-                if (gist.files[fileName]) {
+                if (gist.files && gist.files[fileName]) {
                     const remoteData = JSON.parse(gist.files[fileName].content);
                     this.learnedIds = remoteData.learnedIds || [];
                     this.lastLearnedDomain = remoteData.lastDomain || null;
-                    this.currentLang = remoteData.lang || this.currentLang;
-
                     localStorage.setItem('ignis_learned', JSON.stringify(this.learnedIds));
-                    localStorage.setItem('ignis_lang', this.currentLang);
                     this.updateStats();
-                    this.updateStaticTexts();
                     this.renderSparks();
                 }
             } else {
-                const data = {
-                    learnedIds: this.learnedIds,
-                    lastDomain: this.lastLearnedDomain,
-                    lang: this.currentLang
-                };
-
                 const body = {
                     description: "Ignis Knowledge Platform Sync Data",
                     public: false,
-                    files: { [fileName]: { content: JSON.stringify(data) } }
+                    files: {
+                        [fileName]: {
+                            content: JSON.stringify({
+                                learnedIds: this.learnedIds,
+                                lastDomain: this.lastLearnedDomain,
+                                lang: this.currentLang
+                            })
+                        }
+                    }
                 };
-
-                const response = await fetch(url, {
-                    method: method,
-                    headers: headers,
-                    body: JSON.stringify(body)
-                });
-
-                const gist = await response.json();
+                const resp = await fetch(url, { method, headers, body: JSON.stringify(body) });
+                const gist = await resp.json();
                 if (gist.id) {
                     this.syncState.gistId = gist.id;
                     localStorage.setItem('ignis_gist_id', gist.id);
                 }
             }
-        } catch (error) {
-            console.error("Sync failed:", error);
-            alert(this.currentLang === 'en' ? "Sync failed. Check your token." : "同步失败，请检查你的 Token。");
-        } finally {
-            this.syncState.isSyncing = false;
-            this.items.saveSettings.disabled = false;
-            this.items.saveSettings.textContent = this.currentLang === 'en' ? "Synced ✓" : "已同步 ✓";
-            setTimeout(() => this.updateStaticTexts(), 2000);
-        }
+        } catch (e) { console.error("Sync error:", e); }
     }
 
     renderSparks() {
@@ -525,7 +579,7 @@ class IgnisApp {
     }
 
     openSettings() {
-        this.items.ghTokenInput.value = this.syncState.token;
+        this.updateSyncUI();
         this.items.settingsOverlay.classList.remove('hidden');
     }
 
@@ -533,22 +587,13 @@ class IgnisApp {
         this.items.settingsOverlay.classList.add('hidden');
     }
 
-    handleSaveSettings() {
-        const token = this.items.ghTokenInput.value.trim();
-
-        // If token changed, reset gistId to trigger auto-discovery
-        if (token !== this.syncState.token) {
+    disconnect() {
+        if (confirm(this.currentLang === 'en' ? "Disconnect from GitHub?" : "断开与 GitHub 的连接？")) {
+            this.syncState.token = '';
             this.syncState.gistId = '';
+            localStorage.removeItem('ignis_gh_token');
             localStorage.removeItem('ignis_gist_id');
-        }
-
-        this.syncState.token = token;
-        localStorage.setItem('ignis_gh_token', token);
-
-        if (token) {
-            this.syncProgress('pull'); // Initial sync is always a pull attempt
-        } else {
-            alert(this.currentLang === 'en' ? "Token cleared. Local storage will still be used." : "Token 已清除。将仅使用本地存储。");
+            this.updateSyncUI();
         }
     }
 
@@ -556,7 +601,8 @@ class IgnisApp {
         // Settings
         this.items.settingsBtn.addEventListener('click', () => this.openSettings());
         this.items.closeSettings.addEventListener('click', () => this.closeSettings());
-        this.items.saveSettings.addEventListener('click', () => this.handleSaveSettings());
+        this.items.connectBtn.addEventListener('click', () => this.initiateDeviceFlow());
+        this.items.disconnectBtn.addEventListener('click', () => this.disconnect());
         this.items.settingsOverlay.addEventListener('click', (e) => {
             if (e.target === this.items.settingsOverlay) this.closeSettings();
         });
