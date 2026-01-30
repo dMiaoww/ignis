@@ -5,44 +5,64 @@
 
 const KNOWLEDGE_POOL = [
     {
-        id: 1, title: "The Orchre Effect", tag: "Psychology",
+        id: 1, title: "The Ochre Effect", tag: "Psychology", domain: "Human Perception",
         preview: "Perception of neutral tones in natural vs synthetic light.",
-        full: "The Orchre Effect refers to a phenomenon in color psychology where the human brain adjusts its white balance based on the ambient color temperature. In natural sunlight, our eyes are primed for the full spectrum, making earthy tones appear more vibrant."
+        full: "The Ochre Effect refers to a phenomenon in color psychology where the human brain adjusts its white balance based on the ambient color temperature. In natural sunlight, our eyes are primed for the full spectrum, making earthy tones appear more vibrant.",
+        bridge: { title: "Kelvin Scale", domain: "Physics", text: "While Ochre is about perception, the Kelvin scale is the cold physical measurement of that same light temperature." }
     },
     {
-        id: 2, title: "Kessler Syndrome", tag: "Astronautics",
+        id: 2, title: "Kessler Syndrome", tag: "Astronautics", domain: "Systems Science",
         preview: "A cascade of space debris in low Earth orbit.",
-        full: "Proposed by NASA scientist Donald J. Kessler in 1978, the Kessler Syndrome suggests that a single collision between two large objects could create a cloud of debris that renders orbital shells unusable."
+        full: "Proposed by NASA scientist Donald J. Kessler in 1978, the Kessler Syndrome suggests that a single collision between two large objects could create a cloud of debris that renders orbital shells unusable.",
+        bridge: { title: "Tragedy of the Commons", domain: "Economics", text: "Both systems collapse because individual actors over-exploit a shared, finite resource—whether orbits or pastures." }
     },
     {
-        id: 3, title: "Zeno's Paradox", tag: "Philosophy",
+        id: 3, title: "Zeno's Paradox", tag: "Philosophy", domain: "Logics",
         preview: "The ancient Greek argument that motion is impossible.",
-        full: "Zeno of Elea proposed several paradoxes to support the idea that the world is monolithic and unchanging. The most famous is 'Achilles and the Tortoise', which calculus later resolved."
+        full: "Zeno of Elea proposed several paradoxes to support the idea that the world is monolithic and unchanging. The most famous is 'Achilles and the Tortoise', which calculus later resolved.",
+        bridge: { title: "Planck Length", domain: "Quantum Physics", text: "Zeno assumed space is infinitely divisible; quantum physics suggests there might be a 'smallest' possible unit of space." }
     },
     {
-        id: 4, title: "Lindy Effect", tag: "Statistics",
+        id: 4, title: "Lindy Effect", tag: "Statistics", domain: "Probability",
         preview: "Non-perishable items' life expectancy increases with age.",
-        full: "The Lindy Effect suggests that for things like ideas, books, or technologies, every additional day of survival implies a longer remaining life. If a book has been in print for 50 years, it is likely to be for another 50."
+        full: "The Lindy Effect suggests that for things like ideas, books, or technologies, every additional day of survival implies a longer remaining life. If a book has been in print for 50 years, it is likely to be for another 50.",
+        bridge: { title: "Antifragility", domain: "Risk Mgmt", text: "Systems that follow the Lindy Effect are often antifragile—they actually benefit from time and stressors." }
     },
     {
-        id: 5, title: "Blue Zones", tag: "Health",
+        id: 5, title: "Blue Zones", tag: "Health", domain: "Sociology",
         preview: "Regions of the world where people live much longer than average.",
-        full: "Blue Zones are geographic areas where people live significantly longer lives, often reaching age 100. Factors include plant-based diets, constant moderate physical activity, and strong social connections."
+        full: "Blue Zones are geographic areas where people live significantly longer lives, often reaching age 100. Factors include plant-based diets, constant moderate physical activity, and strong social connections.",
+        bridge: { title: "Social Capital", domain: "Economics", text: "Longevity in Blue Zones isn't just biological; it's a form of social capital where community ties provide safety nets." }
     },
     {
-        id: 6, title: "Pareto Principle", tag: "Economics",
+        id: 6, title: "Pareto Principle", tag: "Economics", domain: "Systems Science",
         preview: "The 80/20 rule of effects originating from causes.",
-        full: "Named after Vilfredo Pareto, this principle states that roughly 80% of consequences come from 20% of causes. It's used widely in business, software optimization, and time management."
+        full: "Named after Vilfredo Pareto, this principle states that roughly 80% of consequences come from 20% of causes. It's used widely in business, software optimization, and time management.",
+        bridge: { title: "Zipf's Law", domain: "Linguistics", text: "The Pareto distribution is a cousin to Zipf's Law, which describes how common words are used in any language." }
     },
     {
-        id: 7, title: "Dunning-Kruger Effect", tag: "Psychology",
+        id: 7, title: "Dunning-Kruger Effect", tag: "Psychology", domain: "Human Perception",
         preview: "Cognitive bias where people with low ability overrate their competence.",
-        full: "Discovered by social psychologists David Dunning and Justin Kruger, this bias involves people with limited knowledge in a domain overestimating their skills, while experts often underestimate theirs."
+        full: "Discovered by social psychologists David Dunning and Justin Kruger, this bias involves people with limited knowledge in a domain overestimating their skills, while experts often underestimate theirs.",
+        bridge: { title: "Socratic Paradox", domain: "Philosophy", text: "The antidote to Dunning-Kruger is the Socratic wisdom: 'I know that I know nothing.'" }
     },
     {
-        id: 8, title: "Schrödinger's Cat", tag: "Physics",
+        id: 8, title: "Schrödinger's Cat", tag: "Physics", domain: "Quantum Mechanics",
         preview: "A thought experiment about quantum superposition.",
-        full: "Erwin Schrödinger proposed this to illustrate the 'absurdity' of the Copenhagen interpretation of quantum mechanics, where a cat in a box could be both alive and dead until observed."
+        full: "Erwin Schrödinger proposed this to illustrate the 'absurdity' of the Copenhagen interpretation of quantum mechanics, where a cat in a box could be both alive and dead until observed.",
+        bridge: { title: "Observer Effect", domain: "Philosophy", text: "This physics thought experiment mirrors the philosophical question of whether reality exists independent of an observer." }
+    },
+    {
+        id: 9, title: "Ship of Theseus", tag: "Philosophy", domain: "Logics",
+        preview: "If every part of a ship is replaced, is it still the same ship?",
+        full: "This thought experiment asks whether an object that has had all of its components replaced remains fundamentally the same object.",
+        bridge: { title: "Biological Cell Turnover", domain: "Biology", text: "Your body replaces most of its cells every 7-10 years. Are you the same person you were a decade ago?" }
+    },
+    {
+        id: 10, title: "Deadlock", tag: "Computing", domain: "Systems Science",
+        preview: "A state where two actions each wait for the other to finish.",
+        full: "In computing, a deadlock happens when two or more processes are each waiting for the other to release a resource, leading to a permanent halt.",
+        bridge: { title: "Mexican Standoff", domain: "Cinematography", text: "Deadlock is the digital version of a Mexican Standoff, a common trope in Western films." }
     }
 ];
 
@@ -51,6 +71,7 @@ class IgnisApp {
         this.allSparks = KNOWLEDGE_POOL;
         this.visibleSparkCount = 4;
         this.learnedIds = this.getSavedProgress();
+        this.lastLearnedDomain = localStorage.getItem('ignis_last_domain') || null;
         this.currentSpark = null;
         this.isAiThinking = false;
 
@@ -91,8 +112,20 @@ class IgnisApp {
 
     renderSparks() {
         this.items.grid.innerHTML = '';
+
+        // Filter out learned items
         const unlearnedSparks = this.allSparks.filter(spark => !this.learnedIds.includes(spark.id));
-        const displaySparks = unlearnedSparks.slice(0, this.visibleSparkCount);
+
+        // Anti-Silo Entropy Sorting: 
+        // 1. Prioritize sparks NOT from the last learned domain
+        // 2. Randomize the selection to avoid deterministic patterns
+        const sortedSparks = unlearnedSparks.sort((a, b) => {
+            if (a.domain === this.lastLearnedDomain && b.domain !== this.lastLearnedDomain) return 1;
+            if (a.domain !== this.lastLearnedDomain && b.domain === this.lastLearnedDomain) return -1;
+            return Math.random() - 0.5;
+        });
+
+        const displaySparks = sortedSparks.slice(0, this.visibleSparkCount);
 
         if (displaySparks.length === 0 && unlearnedSparks.length === 0) {
             this.items.grid.innerHTML = '<div class="info-msg">Your quest for now is complete. Fresh knowledge awaits in the coming days.</div>';
@@ -106,6 +139,7 @@ class IgnisApp {
                 <div class="spark-tag">${spark.tag}</div>
                 <h3 class="spark-title">${spark.title}</h3>
                 <p class="spark-preview">${spark.preview}</p>
+                <div class="spark-domain-label">${spark.domain}</div>
             `;
             card.addEventListener('click', () => this.showDetail(spark));
             this.items.grid.appendChild(card);
@@ -114,10 +148,23 @@ class IgnisApp {
 
     showDetail(spark) {
         this.currentSpark = spark;
+
+        let bridgeHtml = "";
+        if (spark.bridge) {
+            bridgeHtml = `
+                <div class="bridge-card">
+                    <h4>Cross-Domain Bridge</h4>
+                    <p><strong>Connection to ${spark.bridge.domain}:</strong> ${spark.bridge.text}</p>
+                    <div class="bridge-tag">${spark.bridge.title}</div>
+                </div>
+            `;
+        }
+
         this.items.modalContent.innerHTML = `
             <div class="spark-tag">${spark.tag}</div>
             <h2>${spark.title}</h2>
             <p>${spark.full}</p>
+            ${bridgeHtml}
         `;
 
         // Initial AI prompt
@@ -226,7 +273,10 @@ class IgnisApp {
         if (!this.currentSpark || this.learnedIds.includes(this.currentSpark.id)) return;
 
         this.learnedIds.push(this.currentSpark.id);
+        this.lastLearnedDomain = this.currentSpark.domain;
+
         localStorage.setItem('ignis_learned', JSON.stringify(this.learnedIds));
+        localStorage.setItem('ignis_last_domain', this.lastLearnedDomain);
 
         this.updateStats();
         this.items.learnedBtn.textContent = '✓ Learned';
