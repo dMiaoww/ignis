@@ -110,18 +110,19 @@
                     <div id="sync-setup">
                         <p style="font-size: 0.85rem; margin-bottom: 20px;" id="sync-status-text">Not connected to
                             cloud.</p>
-                        <button id="connect-github" class="btn-primary" style="width: 100%;">Connect GitHub</button>
-                    </div>
-
-                    <div id="device-flow-display" class="hidden" style="text-align: center; padding: 20px 0;">
-                        <p style="font-size: 0.85rem; margin-bottom: 10px;">Visit <a
-                                href="https://github.com/login/device" target="_blank" id="device-url"
-                                style="color: var(--accent-color); font-weight: 700;">github.com/login/device</a> and
-                            enter:</p>
-                        <div id="device-code"
-                            style="font-size: 2.5rem; font-weight: 800; letter-spacing: 5px; color: var(--accent-color); margin: 20px 0; font-family: 'Courier New', monospace;">
-                            ---- ----</div>
-                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Waiting for authorization...</p>
+                        <div style="margin-bottom: 15px;">
+                            <a href="https://github.com/settings/tokens/new?description=Ignis%20Sync&scopes=gist"
+                                target="_blank" class="btn-primary"
+                                style="display: block; text-align: center; text-decoration: none; font-size: 0.85rem;"
+                                id="smart-generate-btn">Smart Generate Token</a>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="github-token" class="text-input"
+                                placeholder="Paste generated token here">
+                        </div>
+                        <button id="save-token" class="btn-outline"
+                            style="width: 100%; border-color: var(--accent-color); color: var(--accent-color); margin-top: 10px;">Save
+                            & Connect</button>
                     </div>
 
                     <div id="sync-active" class="hidden">
