@@ -35,7 +35,6 @@ class IgnisApp {
             navRecall: document.getElementById('nav-recall'),
             heroTitle: document.getElementById('hero-title'),
             heroSubtitle: document.getElementById('hero-subtitle'),
-            langToggle: document.getElementById('lang-toggle'),
             // Settings items
             settingsBtn: document.getElementById('settings-btn'),
             settingsOverlay: document.getElementById('settings-overlay'),
@@ -99,6 +98,11 @@ class IgnisApp {
         localStorage.setItem('ignis_lang', this.currentLang);
         this.updateStaticTexts();
         this.renderSparks();
+
+        // Refresh modal if open
+        if (this.currentSpark) {
+            this.showDetail(this.currentSpark);
+        }
     }
 
     updateStaticTexts() {
@@ -284,19 +288,24 @@ class IgnisApp {
         if (spark.bridge) {
             bridgeHtml = `
                 <div class="bridge-card">
-                    <h4>${l === 'en' ? 'Cross-Domain Bridge' : '跨域关联'}</h4>
-                    <p><strong>${l === 'en' ? 'Connection to' : '关联领域'} ${spark.bridge.domain[l]}:</strong> ${spark.bridge.text[l]}</p>
-                    <div class="bridge-tag">${spark.bridge.title[l]}</div>
+                    <p><strong>${spark.bridge.title[l]}</strong> &nbsp; ${spark.bridge.text[l]}</p>
                 </div>
             `;
         }
 
         this.items.modalContent.innerHTML = `
-            <div class="spark-tag">${spark.tag[l]}</div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div class="spark-tag">${spark.tag[l]}</div>
+                <button id="modal-lang-toggle" class="lang-btn" style="padding: 4px 12px; border-radius: 20px;">
+                    ${l === 'en' ? '中' : 'EN'}
+                </button>
+            </div>
             <h2>${spark.title[l]}</h2>
             <p>${spark.full[l]}</p>
             ${bridgeHtml}
         `;
+
+        document.getElementById('modal-lang-toggle').addEventListener('click', () => this.toggleLanguage());
 
         const isLearned = this.learnedIds.includes(spark.id);
         const prompts = {
@@ -502,8 +511,6 @@ class IgnisApp {
             if (e.target === this.items.settingsOverlay) this.closeSettings();
         });
 
-        // Language switching
-        this.items.langToggle.addEventListener('click', () => this.toggleLanguage());
 
         // Nav switching
         this.items.navDiscovery.addEventListener('click', () => this.switchView('discovery'));
