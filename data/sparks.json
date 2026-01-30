@@ -1,0 +1,272 @@
+[
+    {
+        "id": 1,
+        "title": { "en": "The Ochre Effect", "zh": "赭石效应" },
+        "tag": { "en": "Psychology", "zh": "心理学" },
+        "domain": { "en": "Human Perception", "zh": "人类感知" },
+        "preview": { "en": "Perception of neutral tones in natural vs synthetic light.", "zh": "自然光与人造光下中性色调的感知差异。" },
+        "full": { "en": "The Ochre Effect refers to a phenomenon in color psychology where the human brain adjusts its white balance based on the ambient color temperature. In natural sunlight, our eyes are primed for the full spectrum, making earthy tones appear more vibrant.", "zh": "赭石效应是指色彩心理学中的一种现象，即人脑会根据环境色温自动调整白平衡。在自然光下，我们的眼睛对全光谱更为敏感，这使得大地色调显得更加鲜艳。" },
+        "bridge": { "title": { "en": "Kelvin Scale", "zh": "开尔文温标" }, "domain": { "en": "Physics", "zh": "物理学" }, "text": { "en": "While Ochre is about perception, the Kelvin scale is the cold physical measurement of that same light temperature.", "zh": "虽然赭石效应关乎感知，但开尔文温标则是对同一光温的物理精确测量。" } }
+    },
+    {
+        "id": 2,
+        "title": { "en": "Kessler Syndrome", "zh": "凯斯勒现象" },
+        "tag": { "en": "Astronautics", "zh": "航天学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "A cascade of space debris in low Earth orbit.", "zh": "近地轨道上太空垃圾的连锁碰撞反应。" },
+        "full": { "en": "Proposed by NASA scientist Donald J. Kessler in 1978, the Kessler Syndrome suggests that a single collision between two large objects could create a cloud of debris that renders orbital shells unusable.", "zh": "由美国国家航空航天局（NASA）科学家唐纳德·凯斯勒于1978年提出，该理论认为近地轨道上的物体密度过高时，物体间的撞击会产生更多碎片，形成连锁反应，最终导致轨道空间无法使用。" },
+        "bridge": { "title": { "en": "Tragedy of the Commons", "zh": "公地悲记" }, "domain": { "en": "Economics", "zh": "经济学" }, "text": { "en": "Both systems collapse because individual actors over-exploit a shared, finite resource—whether orbits or pastures.", "zh": "这两个系统都会因为个体过度开发共享的有限资源（无论是轨道还是牧场）而崩溃。" } }
+    },
+    {
+        "id": 3,
+        "title": { "en": "Zeno's Paradox", "zh": "芝诺悖论" },
+        "tag": { "en": "Philosophy", "zh": "哲学" },
+        "domain": { "en": "Logics", "zh": "逻辑学" },
+        "preview": { "en": "The ancient Greek argument that motion is impossible.", "zh": "古希腊关于“运动是不可能的”论证。" },
+        "full": { "en": "Zeno of Elea proposed several paradoxes to support the idea that the world is monolithic and unchanging. The most famous is 'Achilles and the Tortoise', which calculus later resolved.", "zh": "爱利亚的芝诺提出了数个悖论来支持世界是单一且永恒不变的观点。其中最著名的是“阿基里斯追乌龟”，后来被微积分理论所化解。" },
+        "bridge": { "title": { "en": "Planck Length", "zh": "普朗克长度" }, "domain": { "en": "Quantum Physics", "zh": "量子物理" }, "text": { "en": "Zeno assumed space is infinitely divisible; quantum physics suggests there might be a 'smallest' possible unit of space.", "zh": "芝诺假设空间是无限可分的；而量子物理学则认为空间可能存在一个“最小”的基本单位。" } }
+    },
+    {
+        "id": 4,
+        "title": { "en": "Lindy Effect", "zh": "林迪效应" },
+        "tag": { "en": "Statistics", "zh": "统计学" },
+        "domain": { "en": "Probability", "zh": "概率论" },
+        "preview": { "en": "Non-perishable items' life expectancy increases with age.", "zh": "非易损物品的预期寿命随其已存在时间的增长而增长。" },
+        "full": { "en": "The Lindy Effect suggests that for things like ideas, books, or technologies, every additional day of survival implies a longer remaining life. If a book has been in print for 50 years, it is likely to be for another 50.", "zh": "林迪效应认为，对于思想、书籍或技术等非物质事物，它们每多生存一天，其剩余的预期寿命就会变长。如果一本书已经出版了50年，它很可能还会再流行50年。" },
+        "bridge": { "title": { "en": "Antifragility", "zh": "反脆弱性" }, "domain": { "en": "Risk Mgmt", "zh": "风险管理" }, "text": { "en": "Systems that follow the Lindy Effect are often antifragile—they actually benefit from time and stressors.", "zh": "遵循林迪效应的系统通常具有反脆弱性——它们实际上能从时间和压力中获益。" } }
+    },
+    {
+        "id": 5,
+        "title": { "en": "Blue Zones", "zh": "蓝色地带" },
+        "tag": { "en": "Health", "zh": "健康" },
+        "domain": { "en": "Sociology", "zh": "社会学" },
+        "preview": { "en": "Regions of the world where people live much longer than average.", "zh": "世界上人们的寿命显著高于平均水平的地区。" },
+        "full": { "en": "Blue Zones are geographic areas where people live significantly longer lives, often reaching age 100. Factors include plant-based diets, constant moderate physical activity, and strong social connections.", "zh": "蓝色地带是指那些居民寿命极长、经常能活到100岁以上的地理区域。其长寿因素包括植物性饮食、规律的适度体力活动以及紧密的社会联系。" },
+        "bridge": { "title": { "en": "Social Capital", "zh": "社会资本" }, "domain": { "en": "Economics", "zh": "经济学" }, "text": { "en": "Longevity in Blue Zones isn't just biological; it's a form of social capital where community ties provide safety nets.", "zh": "蓝色地带的长寿并非纯粹的生物学现象，它也是一种社会资本，社区纽带为居民提供了安全网。" } }
+    },
+    {
+        "id": 6,
+        "title": { "en": "Pareto Principle", "zh": "帕累托法则" },
+        "tag": { "en": "Economics", "zh": "经济学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "The 80/20 rule of effects originating from causes.", "zh": "关于“投入与产出”不平衡的80/20法则。" },
+        "full": { "en": "Named after Vilfredo Pareto, this principle states that roughly 80% of consequences come from 20% of causes. It's used widely in business, software optimization, and time management.", "zh": "以维弗雷多·帕累托命名，该法则指出，在许多事件中，约80%的结果源自20%的原因。它广泛应用于商业管理、软件优化和时间管理等领域。" },
+        "bridge": { "title": { "en": "Zipf's Law", "zh": "齐普夫定律" }, "domain": { "en": "Linguistics", "zh": "语言学" }, "text": { "en": "The Pareto distribution is a cousin to Zipf's Law, which describes how common words are used in any language.", "zh": "帕累托分布是齐普夫定律的近亲，后者描述了语言中常用词汇的使用频率分布情况。" } }
+    },
+    {
+        "id": 7,
+        "title": { "en": "Dunning-Kruger Effect", "zh": "达克效应" },
+        "tag": { "en": "Psychology", "zh": "心理学" },
+        "domain": { "en": "Human Perception", "zh": "人类感知" },
+        "preview": { "en": "Cognitive bias where people with low ability overrate their competence.", "zh": "能力不足的人往往会过度高估自己水平的认知偏差。" },
+        "full": { "en": "Discovered by social psychologists David Dunning and Justin Kruger, this bias involves people with limited knowledge in a domain overestimating their skills, while experts often underestimate theirs.", "zh": "由社会心理学家大卫·邓宁和贾斯汀·克鲁格发现。这种偏差表现为，在某一领域知识匮乏的人往往高估自己的能力，而真正的专家反而容易低估自己。" },
+        "bridge": { "title": { "en": "Socratic Paradox", "zh": "苏格拉底悖论" }, "domain": { "en": "Philosophy", "zh": "哲学" }, "text": { "en": "The antidote to Dunning-Kruger is the Socratic wisdom: 'I know that I know nothing.'", "zh": "达克效应的解药是苏格拉底式的智慧：“我唯一知道的就是我一无所知。”" } }
+    },
+    {
+        "id": 8,
+        "title": { "en": "Schrödinger's Cat", "zh": "薛定谔的猫" },
+        "tag": { "en": "Physics", "zh": "物理学" },
+        "domain": { "en": "Quantum Mechanics", "zh": "量子力学" },
+        "preview": { "en": "A thought experiment about quantum superposition.", "zh": "关于量子叠加态的著名理想实验。" },
+        "full": { "en": "Erwin Schrödinger proposed this to illustrate the 'absurdity' of the Copenhagen interpretation of quantum mechanics, where a cat in a box could be both alive and dead until observed.", "zh": "埃尔温·薛定谔提出这个实验是为了说明量子力学哥本哈根诠释的“荒谬性”，即在被观察之前，盒子里的猫可以同时处于既死又活的叠加状态。" },
+        "bridge": { "title": { "en": "Observer Effect", "zh": "观察者效应" }, "domain": { "en": "Philosophy", "zh": "哲学" }, "text": { "en": "This physics thought experiment mirrors the philosophical question of whether reality exists independent of an observer.", "zh": "这个物理思想实验反映了一个哲学问题：现实是否可以独立于观察者而存在？" } }
+    },
+    {
+        "id": 9,
+        "title": { "en": "Ship of Theseus", "zh": "忒修斯之船" },
+        "tag": { "en": "Philosophy", "zh": "哲学" },
+        "domain": { "en": "Logics", "zh": "逻辑学" },
+        "preview": { "en": "If every part of a ship is replaced, is it still the same ship?", "zh": "如果船的所有零件都被更换了，它还是原来的那艘船吗？" },
+        "full": { "en": "This thought experiment asks whether an object that has had all of its components replaced remains fundamentally the same object.", "zh": "这个思想实验探讨的是：如果一个物体所有的组成部分都被逐一替换，它在本质上是否还是原来的那个物体。" },
+        "bridge": { "title": { "en": "Biological Cell Turnover", "zh": "生物细胞更新" }, "domain": { "en": "Biology", "zh": "生物学" }, "text": { "en": "Your body replaces most of its cells every 7-10 years. Are you the same person you were a decade ago?", "zh": "人体绝大多数细胞每7-10年就会更新一次。那么，你还是十年前的那个你吗？" } }
+    },
+    {
+        "id": 10,
+        "title": { "en": "Deadlock", "zh": "死锁" },
+        "tag": { "en": "Computing", "zh": "计算机科学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "A state where two actions each wait for the other to finish.", "zh": "两个或多个进程因互相等待对方释放资源而陷入的僵局。" },
+        "full": { "en": "In computing, a deadlock happens when two or more processes are each waiting for the other to release a resource, leading to a permanent halt.", "zh": "在计算领域，死锁发生在两个或多个进程互相持有了对方需要的资源且都在等待对方释放时，导致系统永久性卡死。" },
+        "bridge": { "title": { "en": "Mexican Standoff", "zh": "墨西哥对峙" }, "domain": { "en": "Cinematography", "zh": "电影艺术" }, "text": { "en": "Deadlock is the digital version of a Mexican Standoff, a common trope in Western films.", "zh": "死锁堪称“墨西哥对峙”的数字版，后者是西方电影中常见的三个及以上角色互相举枪僵持的桥段。" } }
+    },
+    {
+        "id": 11,
+        "title": { "en": "Prisoner's Dilemma", "zh": "囚徒困境" },
+        "tag": { "en": "Game Theory", "zh": "博弈论" },
+        "domain": { "en": "Logics", "zh": "逻辑学" },
+        "preview": { "en": "Why two rational individuals might not cooperate.", "zh": "为什么两个理性的个体可能不会选择合作。" },
+        "full": { "en": "The Prisoner's Dilemma is a standard example of a game analyzed in game theory that shows why two completely rational individuals might not cooperate, even if it appears that it is in their best interests to do so.", "zh": "囚徒困境是博弈论中一个经典的例子，展示了即使合作似乎符合双方的最大利益，两个完全理性的个体也可能选择互不合作。" },
+        "bridge": { "title": { "en": "Nash Equilibrium", "zh": "纳什均衡" }, "domain": { "en": "Mathematics", "zh": "数学" }, "text": { "en": "The dilemma's outcome is a Nash Equilibrium—a state where no player can improve their result by changing only their own strategy.", "zh": "困境的结果是一种纳什均衡——即在这一状态下，任何一方仅通过改变自己的策略都无法获得更好的结果。" } }
+    },
+    {
+        "id": 12,
+        "title": { "en": "CRISPR-Cas9", "zh": "基因剪刀" },
+        "tag": { "en": "Biotechnology", "zh": "生物技术" },
+        "domain": { "en": "Genetics", "zh": "遗传学" },
+        "preview": { "en": "Precise gene editing using bacterial defense mechanisms.", "zh": "利用细菌免疫机制实现的精确基因编辑技术。" },
+        "full": { "en": "CRISPR-Cas9 is a unique technology that enables geneticists and medical researchers to edit parts of the genome by removing, adding or altering sections of the DNA sequence.", "zh": "CRISPR-Cas9 是一种独特的技术，它允许遗传学家和医学研究人员通过移除、添加或更改 DNA 序列中的特定部分来编辑基因组。" },
+        "bridge": { "title": { "en": "Heisenbugs", "zh": "海森堡软件缺陷" }, "domain": { "en": "Computing", "zh": "计算机科学" }, "text": { "en": "Editing a complex system (like DNA or software) can solve one problem but introduce 'hidden' side effects elsewhere.", "zh": "编辑复杂的系统（如 DNA 或软件）可以解决一个问题，但也可能在其他地方引入“隐藏”的侧面影响。" } }
+    },
+    {
+        "id": 13,
+        "title": { "en": "Golden Ratio", "zh": "黄金分割" },
+        "tag": { "en": "Aesthetics", "zh": "美学" },
+        "domain": { "en": "Mathematics", "zh": "数学" },
+        "preview": { "en": "A mathematical ratio commonly found in nature and art.", "zh": "一种自然界和艺术作品中常见的数学比例。" },
+        "full": { "en": "The golden ratio (Phi ≈ 1.618) is a mathematical ratio found throughout nature, architecture, and art. It is often associated with organic balance and aesthetic beauty.", "zh": "黄金分割比（Phi ≈ 1.618）是一个广泛存在于自然、建筑和艺术中的数学比例。它通常与有机平衡和美学上的愉悦感联系在一起。" },
+        "bridge": { "title": { "en": "Fibonacci Sequence", "zh": "斐波那契数列" }, "domain": { "en": "Biology", "zh": "生物学" }, "text": { "en": "The ratio of consecutive Fibonacci numbers converges to the golden ratio, explaining spiral patterns in plants.", "zh": "相邻两个斐波那契数的比值会趋近于黄金分割比，这解释了植物中常见的螺旋排列模式。" } }
+    },
+    {
+        "id": 14,
+        "title": { "en": "Goodhart's Law", "zh": "古德哈特定律" },
+        "tag": { "en": "Economics", "zh": "经济学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "When a measure becomes a target, it ceases to be a good measure.", "zh": "当一个指标变成目标时，它就不再是一个好的指标了。" },
+        "full": { "en": "Named after economist Charles Goodhart, this law suggests that as soon as people know they are being measured by a certain metric, they will optimize for that metric alone, often at the expense of the actual goal.", "zh": "由经济学家查尔斯·古德哈特提出，该定律认为，一旦人们知道自己正受到某个指标的考核，他们就会仅针对该指标进行优化，往往以牺牲实际目标为代价。" },
+        "bridge": { "title": { "en": "Overfitting", "zh": "过拟合" }, "domain": { "en": "Data Science", "zh": "数据科学" }, "text": { "en": "Overfitting is the technical equivalent of Goodhart's Law: a model fits the data (measure) too perfectly but fails to reflect reality (goal).", "zh": "过拟合是古德哈特定律在技术层面的对应：模型过度契合数据（指标），却无法反映现实情况（目标）。" } }
+    },
+    {
+        "id": 15,
+        "title": { "en": "Wabi-sabi", "zh": "侘寂" },
+        "tag": { "en": "Philosophy", "zh": "哲学" },
+        "domain": { "en": "Aesthetics", "zh": "美学" },
+        "preview": { "en": "Finding beauty in imperfection and transience.", "zh": "在不完美和转瞬即逝中寻觅美感。" },
+        "full": { "en": "Wabi-sabi is a world view centered on the acceptance of transience and imperfection. It values simplicity, humility, and the natural cycle of growth and decay.", "zh": "侘寂是一种以接受“无常”和“不完美”为核心的世界观。它推崇极简、谦逊以及生长与凋零的自然循环。" },
+        "bridge": { "title": { "en": "Kintsugi", "zh": "金缮" }, "domain": { "en": "Art", "zh": "艺术" }, "text": { "en": "Wabi-sabi is the philosophy; Kintsugi is the practical art of repairing pottery with gold to highlight the fractures.", "zh": "侘寂是其哲学内核；而金缮则是其具象的艺术表达，通过用金漆修复破损瓷器来彰显其裂痕之美。" } }
+    },
+    {
+        "id": 16,
+        "title": { "en": "Nash Equilibrium", "zh": "纳什均衡" },
+        "tag": { "en": "Game Theory", "zh": "博弈论" },
+        "domain": { "en": "Mathematics", "zh": "数学" },
+        "preview": { "en": "Stability where no player benefits from changing their strategy.", "zh": "没有任何一方能通过改变策略获益的稳定状态。" },
+        "full": { "en": "A state in a game involving two or more players in which no player has an incentive to change their strategy, assuming the other players keep theirs unchanged.", "zh": "在涉及两个或更多参与者的博弈中，纳什均衡是指在假设其他参与者策略不变的前提下，没有任何参与者有动力去改变自己的策略。" },
+        "bridge": { "title": { "en": "Evolutionary Stable Strategy (ESS)", "zh": "演化稳定策略" }, "domain": { "en": "Biology", "zh": "生物学" }, "text": { "en": "In nature, ESS is a Nash Equilibrium that prevents mutations (different behaviors) from taking over a population.", "zh": "在自然界中，ESS 是一种防止突变（不同行为）占据种群主导地位的纳什均衡状态。" } }
+    },
+    {
+        "id": 17,
+        "title": { "en": "Entropy", "zh": "熵" },
+        "tag": { "en": "Physics", "zh": "物理学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "The inevitable increase of disorder in an isolated system.", "zh": "孤立系统中无序程度不可避免地增加。" },
+        "full": { "en": "The Second Law of Thermodynamics states that the total entropy of an isolated system can never decrease over time; it can only remain constant or increase.", "zh": "热力学第二定律指出，一个孤立系统的总熵值永远不会随时间减少；它只能保持不变或增加。" },
+        "bridge": { "title": { "en": "Technical Debt", "zh": "技术债" }, "domain": { "en": "Computing", "zh": "计算机科学" }, "text": { "en": "Software naturally drifts toward disorder (entropy) unless energy (refactoring) is constantly applied to maintain order.", "zh": "除非持续投入精力（重构）来维持秩序，否则软件系统会自然地滑向无序状态（熵增），这被称为技术债。" } }
+    },
+    {
+        "id": 18,
+        "title": { "en": "Dunbar's Number", "zh": "邓巴数字" },
+        "tag": { "en": "Sociology", "zh": "社会学" },
+        "domain": { "en": "Anthropology", "zh": "人类学" },
+        "preview": { "en": "The limit to the number of people one can maintain stable social relationships with.", "zh": "一个人能与之保持稳定社交关系的上限人数。" },
+        "full": { "en": "Proposed by Robin Dunbar, this theory suggests there is a cognitive limit (~150) to the number of people with whom one can maintain stable social relationships.", "zh": "由罗宾·邓巴提出，该理论认为人类维持稳定社交关系的人数存在一个认知上限（约 150 人）。" },
+        "bridge": { "title": { "en": "Metcalfe's Law", "zh": "梅特卡夫定律" }, "domain": { "en": "Networks", "zh": "网络科学" }, "text": { "en": "While Dunbar limits individual nodes, Metcalfe's Law says the value of the network overall grows with the square of its users.", "zh": "虽然邓巴数字限制了单个节点的社交范围，但梅特卡夫定律指出，网络的整体价值随用户数量的平方而增长。" } }
+    },
+    {
+        "id": 19,
+        "title": { "en": "Apophenia", "zh": "幻想性错觉" },
+        "tag": { "en": "Psychology", "zh": "心理学" },
+        "domain": { "en": "Human Perception", "zh": "人类感知" },
+        "preview": { "en": "The tendency to perceive meaningful patterns in random data.", "zh": "在随机数据中感知到有意义模式的倾向。" },
+        "full": { "en": "Apophenia is the human tendency to see connections and patterns between unrelated variables, such as seeing faces in clouds or hearing hidden messages in static.", "zh": "幻想性错觉是人类在无关变量之间发现关联和模式的倾向，例如在云朵中看到人脸，或在噪音中听出隐含的信息。" },
+        "bridge": { "title": { "en": "Correlation vs Causation", "zh": "相关性不等同于因果性" }, "domain": { "en": "Statistics", "zh": "统计学" }, "text": { "en": "Apophenia often leads people to mistake mere statistical correlation for actual physical causation.", "zh": "幻想性错觉往往会导致人们将纯粹的统计学相关性误认为实际的物理因果关系。" } }
+    },
+    {
+        "id": 20,
+        "title": { "en": "Social Proof", "zh": "社会认同" },
+        "tag": { "en": "Sociology", "zh": "社会学" },
+        "domain": { "en": "Behavioral Sci", "zh": "行为科学" },
+        "preview": { "en": "Copying the actions of others in an attempt to reflect correct behavior.", "zh": "通过模仿他人的行为来试图表现出正确举止的心理倾向。" },
+        "full": { "en": "Social proof occurs when individuals look to the behaviors of others to determine their own actions in uncertain situations, assuming those others possess more knowledge.", "zh": "社会认同发生在当个体在不确定的情况下，通过观察他人的行为来决定自己的行动，并假设这些人拥有更多的相关知识。" },
+        "bridge": { "title": { "en": "Bystander Effect", "zh": "旁观者效应" }, "domain": { "en": "Social Psych", "zh": "社会心理学" }, "text": { "en": "Negative social proof: if no one else is helping, the brain assumes help is not required or appropriate.", "zh": "负面的社会认同表现为：如果周围没有人施以援手，大脑就会默认不需要或者不应该提供帮助，这就是旁观者效应。" } }
+    },
+    {
+        "id": 21,
+        "title": { "en": "CAP Theorem", "zh": "CAP 定理" },
+        "tag": { "en": "Computing", "zh": "计算机科学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "Pick two: Consistency, Availability, Partition Tolerance.", "zh": "一致性、可用性、分区容错性：三者不可兼得，只能选其二。" },
+        "full": { "en": "In distributed systems, the CAP theorem states that it is impossible for a system to simultaneously provide all three guarantees: Consistency, Availability, and Partition Tolerance.", "zh": "在分布式系统中，CAP 定理指出，一个系统不可能同时提供以下三种保证：一致性、可用性和分区容错性。" },
+        "bridge": { "title": { "en": "Project Management Triangle", "zh": "项目管理三角形" }, "domain": { "en": "Management", "zh": "管理学" }, "text": { "en": "Just like CAP, you can't have Fast, Cheap, and High Quality at the same time—you must pick two.", "zh": "就像 CAP 定理一样，在项目中你无法同时获得“速度快”、“质量高”和“价格廉”——你必须从中做出取舍。" } }
+    },
+    {
+        "id": 22,
+        "title": { "en": "Confirmation Bias", "zh": "确认偏误" },
+        "tag": { "en": "Psychology", "zh": "心理学" },
+        "domain": { "en": "Human Perception", "zh": "人类感知" },
+        "preview": { "en": "Prioritizing information that supports existing beliefs.", "zh": "倾向于关注那些能支持自己既有观点的证据。" },
+        "full": { "en": "Confirmation bias is the tendency to search for, interpret, favor, and recall information in a way that confirms one's preexisting beliefs or hypotheses.", "zh": "确认偏误是指个人倾向于以能够证实其先验信念或假设的方式来搜索、解释、关注和回想信息的认知偏差。" },
+        "bridge": { "title": { "en": "Echo Chamber", "zh": "回声室效应" }, "domain": { "en": "Media Studies", "zh": "媒体研究" }, "text": { "en": "Social media algorithms exploit confirmation bias to build echo chambers, shielding users from opposing views.", "zh": "社交媒体算法利用确认偏误来构建回声室效应，使用户屏蔽掉与自己相左的观点。" } }
+    },
+    {
+        "id": 23,
+        "title": { "en": "Occam's Razor", "zh": "奥卡姆剃刀" },
+        "tag": { "en": "Philosophy", "zh": "哲学" },
+        "domain": { "en": "Logics", "zh": "逻辑学" },
+        "preview": { "en": "The simplest explanation is most likely the right one.", "zh": "如无必要，勿增实体：最简单的解释往往就是正确的。" },
+        "full": { "en": "Occam's razor is the problem-solving principle that entities should not be multiplied beyond necessity—the simplest solution is usually the correct one.", "zh": "奥卡姆剃刀是一种解决问题的原则，即“如无必要，勿增实体”——在多个互相竞争的假设中，最简单的那个通常就是正确的。" },
+        "bridge": { "title": { "en": "Overfitting in ML", "zh": "机器学习中的过拟合" }, "domain": { "en": "AI", "zh": "人工智能" }, "text": { "en": "We use 'Regularization' in ML as a digital Occam's Razor to trim overly complex models.", "zh": "在机器学习中，我们使用“正则化”作为数字版的奥卡姆剃刀，以此来修剪过于复杂的模型。" } }
+    },
+    {
+        "id": 24,
+        "title": { "en": "Black Swan Theory", "zh": "黑天鹅理论" },
+        "tag": { "en": "Statistics", "zh": "统计学" },
+        "domain": { "en": "Probability", "zh": "概率论" },
+        "preview": { "en": "Unpredictable events with extreme consequences.", "zh": "极其罕见、不可预测且具有巨大影响力的事件。" },
+        "full": { "en": "Developed by Nassim Nicholas Taleb, this theory refers to unpredictable, rare events that have massive impacts. After the fact, people often try to rationalize them as predictable.", "zh": "由纳西姆·尼古拉斯·塔勒布提出。该理论指的是那些难以预测、极其罕见但具有巨大影响的事件。而在事后，人们往往会试图将其解释为是可以预见的。" },
+        "bridge": { "title": { "en": "Normal Distribution", "zh": "正态分布" }, "domain": { "en": "Mathematics", "zh": "数学" }, "text": { "en": "Black Swans are the events that live in the 'Fat Tails' outside the standard Normal Distribution curves.", "zh": "黑天鹅事件是指那些位于标准正态分布曲线之外的、“肥尾”区域的极端事件。" } }
+    },
+    {
+        "id": 25,
+        "title": { "en": "Placebo Effect", "zh": "安慰剂效应" },
+        "tag": { "en": "Medicine", "zh": "医学" },
+        "domain": { "en": "Behavioral Sci", "zh": "行为科学" },
+        "preview": { "en": "A true improvement in health not caused by active treatment.", "zh": "并非由药物直接引起，而是由于心理预期带来的真实健康改善。" },
+        "full": { "en": "The placebo effect is a phenomenon in which some people experience a benefit after the administration of an inactive 'fake' substance or treatment, driven purely by psychological expectation.", "zh": "安慰剂效应是指一些人在接受无效的“虚假”物质或治疗后，纯粹由于心理上的预期而体验到真实的健康益处的现象。" },
+        "bridge": { "title": { "en": "Hawthorne Effect", "zh": "霍桑效应" }, "domain": { "en": "Management", "zh": "管理学" }, "text": { "en": "While Placebo is about expectation of a cure, Hawthorne is about performance change because you are being watched.", "zh": "安慰剂效应关乎对疗效的预期，而霍桑效应则关乎因为意识到被关注而带来的表现改变。" } }
+    },
+    {
+        "id": 26,
+        "title": { "en": "Externalities", "zh": "外部性" },
+        "tag": { "en": "Economics", "zh": "经济学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "Costs or benefits that affect a party who did not choose to incur them.", "zh": "非相关方在没有选择的情况下所承担的成本或获得的收益。" },
+        "full": { "en": "An externality is a cost or benefit that arises from an economic activity but is not reflected in the market price of the good or service. Pollution is a classic negative externality.", "zh": "外部性是由经济活动产生，但未反映在商品或劳务的市场价格中的成本或收益。污染就是典型的负外部性。" },
+        "bridge": { "title": { "en": "Tragedy of the Horizon", "zh": "公地的悲剧（时间维度）" }, "domain": { "en": "Environmental Sci", "zh": "环境科学" }, "text": { "en": "Today's externalities (carbon emissions) become the debt for future generations.", "zh": "今天的负外部性（碳排放）会演变成子孙后代的沉重债务。" } }
+    },
+    {
+        "id": 27,
+        "title": { "en": "Maslow's Hierarchy", "zh": "马斯洛需求层次" },
+        "tag": { "en": "Psychology", "zh": "心理学" },
+        "domain": { "en": "Sociology", "zh": "社会学" },
+        "preview": { "en": "Levels of human needs from basic safety to self-actualization.", "zh": "从基本安全到自我实现的人类需求层级。" },
+        "full": { "en": "Abraham Maslow proposed that human motivations move through a hierarchy of needs, starting from physiological and safety needs, ending in self-actualization.", "zh": "亚伯拉罕·马斯洛提出，人类的动机遵循一个需求金字塔，从生理和安全需求开始，最终走向自我实现。" },
+        "bridge": { "title": { "en": "Engel's Law", "zh": "恩格尔定律" }, "domain": { "en": "Economics", "zh": "经济学" }, "text": { "en": "As income rises, the proportion of income spent on food (base of hierarchy) falls.", "zh": "随着收入的增加，用于食品（需求金字塔底层）的开支占总收入的比重会随之下降。" } }
+    },
+    {
+        "id": 28,
+        "title": { "en": "Emergence", "zh": "涌现" },
+        "tag": { "en": "Philosophy", "zh": "哲学" },
+        "domain": { "en": "Systems Science", "zh": "系统科学" },
+        "preview": { "en": "Complex patterns arising from simple rules.", "zh": "简单规则下产生出的复杂且无法预测的模式。" },
+        "full": { "en": "Emergence occurs when a complex system exhibits properties that its individual parts do not have on their own. The collective behavior of an ant colony or a brain is an emergent property.", "zh": "涌现发生在一个复杂的系统表现出其单个组成部分所不具备的属性时。蚁群的集体行为或大脑的意识都是典型的涌现属性。" },
+        "bridge": { "title": { "en": "Conway's Game of Life", "zh": "康威生命游戏" }, "domain": { "en": "Mathematics", "zh": "数学" }, "text": { "en": "A digital demonstration of emergence where three simple rules create infinite complex behaviors.", "zh": "这是涌现的一个数字模拟演示：仅通过三条简单的规则就创造出了无限复杂的行为模式。" } }
+    },
+    {
+        "id": 29,
+        "title": { "en": "Moore's Law", "zh": "摩尔定律" },
+        "tag": { "en": "Computing", "zh": "计算机科学" },
+        "domain": { "en": "Genetics", "zh": "遗传学" },
+        "preview": { "en": "The doubling of transistors on a microchip every two years.", "zh": "集成电路上可容纳的晶体管数目约每隔两年便会增加一倍。" },
+        "full": { "en": "Proposed by Gordon Moore, this law suggests that computing power will grow exponentially while costs decrease. This has driven the technological revolution of the last 50 years.", "zh": "由戈登·摩尔提出，该定律认为计算能力将呈指数级增长而成本则不断下降。这在过去 50 年中推动了技术革命。" },
+        "bridge": { "title": { "en": "Carlson Curve", "zh": "卡尔森曲线" }, "domain": { "en": "Biotech", "zh": "生物技术" }, "text": { "en": "The Carlson Curve is the biotech equivalent of Moore's Law: the speed of DNA sequencing is doubling every year.", "zh": "卡尔森曲线是生物技术领域的“摩尔定律”：DNA 测序的速度正在以每年翻一番的惊人速度增长。" } }
+    },
+    {
+        "id": 30,
+        "title": { "en": "Prospect Theory", "zh": "前景理论" },
+        "tag": { "en": "Economics", "zh": "经济学" },
+        "domain": { "en": "Behavioral Sci", "zh": "行为科学" },
+        "preview": { "en": "People value losses and gains differently.", "zh": "面对收益与损失时，人类的心理感官是不对称的。" },
+        "full": { "en": "Developed by Kahneman and Tversky, Prospect Theory explains that people are naturally more hurt by a loss than they are pleased by an equivalent gain (Loss Aversion).", "zh": "由丹尼尔·卡尼曼和阿莫斯·特沃斯基开发。前景理论解释了为什么同等数额的损失带给人的痛苦感，要远远大于同等数额收益带来的愉悦感（损失厌恶）。" },
+        "bridge": { "title": { "en": "Sunk Cost Fallacy", "zh": "沉没成本谬误" }, "domain": { "en": "Sociology", "zh": "社会学" }, "text": { "en": "Loss aversion makes us 'double down' on a failing project just to avoid admitting the loss of what we've already spent.", "zh": "由于损失厌恶的作用，我们会对一个已经失败的项目“加倍投入”，仅仅是为了避免承认已经付出的成本是无法挽回的。" } }
+    }
+]
