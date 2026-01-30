@@ -74,6 +74,7 @@ class IgnisApp {
         this.lastLearnedDomain = localStorage.getItem('ignis_last_domain') || null;
         this.currentSpark = null;
         this.isAiThinking = false;
+        this.currentView = 'discovery'; // 'discovery' or 'recall'
 
         // Cache DOM Elements
         this.items = {
@@ -86,7 +87,11 @@ class IgnisApp {
             learnedBtn: document.getElementById('mark-learned-btn'),
             closeBtn: document.getElementById('close-modal'),
             learnedCountDisplay: document.getElementById('learned-count'),
-            loadingTrigger: document.getElementById('loading-trigger')
+            loadingTrigger: document.getElementById('loading-trigger'),
+            navDiscovery: document.getElementById('nav-discovery'),
+            navRecall: document.getElementById('nav-recall'),
+            heroTitle: document.getElementById('hero-title'),
+            heroSubtitle: document.getElementById('hero-subtitle')
         };
 
         this.init();
@@ -296,6 +301,10 @@ class IgnisApp {
     }
 
     bindEvents() {
+        // Nav switching
+        this.items.navDiscovery.addEventListener('click', () => this.switchView('discovery'));
+        this.items.navRecall.addEventListener('click', () => this.switchView('recall'));
+
         // Close buttons
         this.items.closeBtn.addEventListener('click', () => this.closeModal());
         this.items.overlay.addEventListener('click', (e) => {

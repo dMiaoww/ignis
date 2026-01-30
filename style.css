@@ -67,6 +67,33 @@ body {
     border-radius: 50px;
 }
 
+.nav-menu {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: var(--transition-smooth);
+}
+
+.nav-btn:hover {
+    background: var(--accent-light);
+    color: var(--accent-color);
+}
+
+.nav-btn.active {
+    background: var(--accent-color);
+    color: #fff;
+}
+
 /* Hero */
 .hero {
     text-align: center;
