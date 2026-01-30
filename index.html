@@ -38,6 +38,14 @@
             <div class="stats" id="stats-display">
                 <button id="lang-toggle" class="lang-btn">EN / 中</button>
                 <span class="stat-item"><span id="learned-count">0</span> Learned</span>
+                <button id="settings-btn" class="icon-btn" aria-label="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </button>
             </div>
         </header>
 
@@ -90,8 +98,39 @@
                 </div>
             </div>
         </div>
+        <!-- Settings Modal Overlay -->
+        <div id="settings-overlay" class="overlay hidden">
+            <div class="modal shadow-soft" style="max-width: 500px; height: auto;">
+                <button id="close-settings" class="btn-close">&times;</button>
+                <div class="modal-info" style="border: none; padding: 40px;">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 20px;" id="settings-title">Cloud Sync</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 25px;" id="settings-desc">
+                        Keep your progress across devices using GitHub Gist.</p>
+
+                    <div class="form-group">
+                        <label for="github-token"
+                            style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px;">GitHub
+                            Token (PAT)</label>
+                        <input type="password" id="github-token" class="text-input" placeholder="ghp_xxxxxxxxxxxx">
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="gist-id"
+                            style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px;">Gist ID
+                            (Optional)</label>
+                        <input type="text" id="gist-id" class="text-input"
+                            placeholder="Existing Gist ID or leave empty">
+                    </div>
+
+                    <div style="margin-top: 30px; display: flex; gap: 10px;">
+                        <button id="save-settings" class="btn-primary" style="flex: 1;">Save & Sync</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
     </div>
-    <script src="app.js"></script>
 </body>
 
 </html>

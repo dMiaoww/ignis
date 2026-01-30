@@ -106,6 +106,11 @@ class IgnisApp {
         this.isAiThinking = false;
         this.currentView = 'discovery'; // 'discovery' or 'recall'
         this.currentLang = localStorage.getItem('ignis_lang') || 'en'; // 'en' or 'zh'
+        this.syncState = {
+            token: localStorage.getItem('ignis_gh_token') || '',
+            gistId: localStorage.getItem('ignis_gist_id') || '',
+            isSyncing: false
+        };
 
         // Cache DOM Elements
         this.items = {
@@ -123,7 +128,16 @@ class IgnisApp {
             navRecall: document.getElementById('nav-recall'),
             heroTitle: document.getElementById('hero-title'),
             heroSubtitle: document.getElementById('hero-subtitle'),
-            langToggle: document.getElementById('lang-toggle')
+            langToggle: document.getElementById('lang-toggle'),
+            // Settings items
+            settingsBtn: document.getElementById('settings-btn'),
+            settingsOverlay: document.getElementById('settings-overlay'),
+            closeSettings: document.getElementById('close-settings'),
+            saveSettings: document.getElementById('save-settings'),
+            ghTokenInput: document.getElementById('github-token'),
+            gistIdInput: document.getElementById('gist-id'),
+            settingsTitle: document.getElementById('settings-title'),
+            settingsDesc: document.getElementById('settings-desc')
         };
 
         this.init();
@@ -175,16 +189,93 @@ class IgnisApp {
             completeMsg: { en: "Your quest for now is complete. Fresh knowledge awaits in the coming days.", zh: "你目前的探索已完成。新的知识正在酝酿中。" },
             emptyRecall: { en: "You haven't learned any sparks yet. Start your discovery first!", zh: "你还没有学习任何火花。先去探索新知识吧！" },
             markLearned: { en: "Mark as Learned", zh: "标记为已学" },
-            alreadyLearned: { en: "✓ Learned", zh: "✓ 已学习" }
+            alreadyLearned: { en: "✓ Learned", zh: "✓ 已学习" },
+            settingsTitle: { en: "Cloud Sync", zh: "云端同步" },
+            settingsDesc: { en: "Keep your progress across devices using GitHub Gist.", zh: "使用 GitHub Gist 在不同设备间同步你的学习进度。" },
+            saveBtn: { en: "Save & Sync", zh: "保存并同步" }
         };
 
         this.items.navDiscovery.textContent = t.discovery[this.currentLang];
         this.items.navRecall.textContent = t.recall[this.currentLang];
         this.items.heroSubtitle.textContent = this.currentView === 'discovery' ? t.discoverySubtitle[this.currentLang] : t.recallSubtitle[this.currentLang];
         this.items.heroTitle.innerHTML = this.currentView === 'discovery' ? t.discoveryHero[this.currentLang] : t.recallHero[this.currentLang];
+        this.items.settingsTitle.textContent = t.settingsTitle[this.currentLang];
+        this.items.settingsDesc.textContent = t.settingsDesc[this.currentLang];
+        this.items.saveSettings.textContent = t.saveBtn[this.currentLang];
 
         const learnedSpan = this.items.learnedCountDisplay.nextSibling;
         if (learnedSpan) learnedSpan.textContent = ` ${t.learned[this.currentLang]}`;
+    }
+
+    // Cloud Sync Logic
+    async syncProgress(direction = 'push') {
+        if (!this.syncState.token) return;
+        this.syncState.isSyncing = true;
+        this.items.saveSettings.disabled = true;
+        this.items.saveSettings.textContent = this.currentLang === 'en' ? "Syncing..." : "同步中...";
+
+        const data = {
+            learnedIds: this.learnedIds,
+            lastDomain: this.lastLearnedDomain,
+            lang: this.currentLang
+        };
+
+        try {
+            const fileName = 'ignis_data.json';
+            let url = 'https://api.github.com/gists';
+            let method = 'POST';
+
+            if (this.syncState.gistId) {
+                url += `/${this.syncState.gistId}`;
+                method = 'PATCH';
+            }
+
+            if (direction === 'pull' && this.syncState.gistId) {
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `token ${this.syncState.token}` }
+                });
+                const gist = await response.json();
+                const remoteData = JSON.parse(gist.files[fileName].content);
+                this.learnedIds = remoteData.learnedIds || [];
+                this.lastLearnedDomain = remoteData.lastDomain || null;
+                this.currentLang = remoteData.lang || this.currentLang;
+                localStorage.setItem('ignis_learned', JSON.stringify(this.learnedIds));
+                localStorage.setItem('ignis_lang', this.currentLang);
+                this.updateStats();
+                this.updateStaticTexts();
+                this.renderSparks();
+            } else {
+                const body = {
+                    description: "Ignis Knowledge Platform Sync Data",
+                    public: false,
+                    files: { [fileName]: { content: JSON.stringify(data) } }
+                };
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Authorization': `token ${this.syncState.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const gist = await response.json();
+                if (gist.id) {
+                    this.syncState.gistId = gist.id;
+                    localStorage.setItem('ignis_gist_id', gist.id);
+                    this.items.gistIdInput.value = gist.id;
+                }
+            }
+        } catch (error) {
+            console.error("Sync failed:", error);
+            alert(this.currentLang === 'en' ? "Sync failed. Check your token." : "同步失败，请检查你的 Token。");
+        } finally {
+            this.syncState.isSyncing = false;
+            this.items.saveSettings.disabled = false;
+            this.items.saveSettings.textContent = this.currentLang === 'en' ? "Synced ✓" : "已同步 ✓";
+            setTimeout(() => this.updateStaticTexts(), 2000);
+        }
     }
 
     renderSparks() {
@@ -410,6 +501,9 @@ class IgnisApp {
         this.items.learnedBtn.textContent = labels.done[this.currentLang];
         this.items.learnedBtn.disabled = true;
 
+        // Auto-sync if token exists
+        if (this.syncState.token) this.syncProgress('push');
+
         // Give visual feedback before closing or updating
         setTimeout(() => {
             this.closeModal();
@@ -423,7 +517,42 @@ class IgnisApp {
         this.currentSpark = null;
     }
 
+    openSettings() {
+        this.items.ghTokenInput.value = this.syncState.token;
+        this.items.gistIdInput.value = this.syncState.gistId;
+        this.items.settingsOverlay.classList.remove('hidden');
+    }
+
+    closeSettings() {
+        this.items.settingsOverlay.classList.add('hidden');
+    }
+
+    handleSaveSettings() {
+        const token = this.items.ghTokenInput.value.trim();
+        const gistId = this.items.gistIdInput.value.trim();
+
+        this.syncState.token = token;
+        this.syncState.gistId = gistId;
+
+        localStorage.setItem('ignis_gh_token', token);
+        localStorage.setItem('ignis_gist_id', gistId);
+
+        if (token) {
+            this.syncProgress(gistId ? 'pull' : 'push');
+        } else {
+            alert(this.currentLang === 'en' ? "Token cleared. Local storage will still be used." : "Token 已清除。将仅使用本地存储。");
+        }
+    }
+
     bindEvents() {
+        // Settings
+        this.items.settingsBtn.addEventListener('click', () => this.openSettings());
+        this.items.closeSettings.addEventListener('click', () => this.closeSettings());
+        this.items.saveSettings.addEventListener('click', () => this.handleSaveSettings());
+        this.items.settingsOverlay.addEventListener('click', (e) => {
+            if (e.target === this.items.settingsOverlay) this.closeSettings();
+        });
+
         // Language switching
         this.items.langToggle.addEventListener('click', () => this.toggleLanguage());
 
