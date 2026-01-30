@@ -115,29 +115,49 @@ class IgnisApp {
         this.items.learnedCountDisplay.textContent = this.learnedIds.length;
     }
 
+    switchView(view) {
+        this.currentView = view;
+        this.items.navDiscovery.classList.toggle('active', view === 'discovery');
+        this.items.navRecall.classList.toggle('active', view === 'recall');
+
+        if (view === 'discovery') {
+            this.items.heroSubtitle.textContent = "Scholarly Pursuits";
+            this.items.heroTitle.innerHTML = `Your journey of <span class="accent-text">infinite discovery</span>.`;
+        } else {
+            this.items.heroSubtitle.textContent = "Inner Reflections";
+            this.items.heroTitle.innerHTML = `Rekindle the <span class="accent-text">sparks of wisdom</span>.`;
+        }
+
+        this.renderSparks();
+    }
+
     renderSparks() {
         this.items.grid.innerHTML = '';
 
-        // Filter out learned items
-        const unlearnedSparks = this.allSparks.filter(spark => !this.learnedIds.includes(spark.id));
+        let sparksToShow = [];
+        if (this.currentView === 'discovery') {
+            // Discovery view: unlearned items, entropy sorted
+            const unlearnedSparks = this.allSparks.filter(spark => !this.learnedIds.includes(spark.id));
+            sparksToShow = unlearnedSparks.sort((a, b) => {
+                if (a.domain === this.lastLearnedDomain && b.domain !== this.lastLearnedDomain) return 1;
+                if (a.domain !== this.lastLearnedDomain && b.domain === this.lastLearnedDomain) return -1;
+                return Math.random() - 0.5;
+            }).slice(0, this.visibleSparkCount);
 
-        // Anti-Silo Entropy Sorting: 
-        // 1. Prioritize sparks NOT from the last learned domain
-        // 2. Randomize the selection to avoid deterministic patterns
-        const sortedSparks = unlearnedSparks.sort((a, b) => {
-            if (a.domain === this.lastLearnedDomain && b.domain !== this.lastLearnedDomain) return 1;
-            if (a.domain !== this.lastLearnedDomain && b.domain === this.lastLearnedDomain) return -1;
-            return Math.random() - 0.5;
-        });
-
-        const displaySparks = sortedSparks.slice(0, this.visibleSparkCount);
-
-        if (displaySparks.length === 0 && unlearnedSparks.length === 0) {
-            this.items.grid.innerHTML = '<div class="info-msg">Your quest for now is complete. Fresh knowledge awaits in the coming days.</div>';
-            return;
+            if (sparksToShow.length === 0 && unlearnedSparks.length === 0) {
+                this.items.grid.innerHTML = '<div class="info-msg">Your quest for now is complete. Fresh knowledge awaits in the coming days.</div>';
+                return;
+            }
+        } else {
+            // Recall view: all learned items
+            sparksToShow = this.allSparks.filter(spark => this.learnedIds.includes(spark.id));
+            if (sparksToShow.length === 0) {
+                this.items.grid.innerHTML = '<div class="info-msg">You haven\'t learned any sparks yet. Start your discovery first!</div>';
+                return;
+            }
         }
 
-        displaySparks.forEach((spark) => {
+        sparksToShow.forEach((spark) => {
             const card = document.createElement('div');
             card.className = 'spark-card';
             card.innerHTML = `
@@ -172,12 +192,17 @@ class IgnisApp {
             ${bridgeHtml}
         `;
 
-        // Initial AI prompt
-        this.items.chatMessages.innerHTML = `
-            <div class="msg ai">Hello! I'm your knowledge guide. I can help you dive deeper into <strong>${spark.title}</strong>. What specific part interests you?</div>
-        `;
+        // AI prompt adjustment for Recall
+        if (isLearned) {
+            this.items.chatMessages.innerHTML = `
+                <div class="msg ai">Welcome back to <strong>${spark.title}</strong>! It's great to revisit this. Has your perspective on this changed, or would you like to explore deeper layers?</div>
+            `;
+        } else {
+            this.items.chatMessages.innerHTML = `
+                <div class="msg ai">Hello! I'm your knowledge guide. I can help you dive deeper into <strong>${spark.title}</strong>. What specific part interests you?</div>
+            `;
+        }
 
-        const isLearned = this.learnedIds.includes(spark.id);
         this.items.learnedBtn.textContent = isLearned ? '✓ Learned' : 'Mark as Learned';
         this.items.learnedBtn.disabled = isLearned;
 
