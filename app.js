@@ -8,6 +8,7 @@ class IgnisApp {
         this.allSparks = [];
         this.visibleSparkCount = 4;
         this.learnedIds = this.getSavedProgress();
+        this.auraLevels = this.getAuraLevels(); // Track deep-dive depth per spark
         this.lastLearnedDomain = localStorage.getItem('ignis_last_domain') || null;
         this.currentSpark = null;
         this.isAiThinking = false;
@@ -58,6 +59,14 @@ class IgnisApp {
             return JSON.parse(localStorage.getItem('ignis_learned') || '[]');
         } catch (e) {
             return [];
+        }
+    }
+
+    getAuraLevels() {
+        try {
+            return JSON.parse(localStorage.getItem('ignis_aura') || '{}');
+        } catch (e) {
+            return {};
         }
     }
 
@@ -195,8 +204,10 @@ class IgnisApp {
                 if (gist.files && gist.files[fileName]) {
                     const remoteData = JSON.parse(gist.files[fileName].content);
                     this.learnedIds = remoteData.learnedIds || [];
+                    this.auraLevels = remoteData.auraLevels || {};
                     this.lastLearnedDomain = remoteData.lastDomain || null;
                     localStorage.setItem('ignis_learned', JSON.stringify(this.learnedIds));
+                    localStorage.setItem('ignis_aura', JSON.stringify(this.auraLevels));
                     this.updateStats();
                     this.updateSyncUI();
                     this.renderSparks();
@@ -210,6 +221,7 @@ class IgnisApp {
                         [fileName]: {
                             content: JSON.stringify({
                                 learnedIds: this.learnedIds,
+                                auraLevels: this.auraLevels,
                                 lastDomain: this.lastLearnedDomain,
                                 lang: this.currentLang
                             })
@@ -240,44 +252,128 @@ class IgnisApp {
 
     renderSparks() {
         this.items.grid.innerHTML = '';
+        const l = this.currentLang;
 
-        let sparksToShow = [];
         if (this.currentView === 'discovery') {
             const unlearnedSparks = this.allSparks.filter(spark => !this.learnedIds.includes(spark.id));
-            sparksToShow = unlearnedSparks.sort((a, b) => {
+            const sparksToShow = unlearnedSparks.sort((a, b) => {
                 if (a.domain.en === this.lastLearnedDomain && b.domain.en !== this.lastLearnedDomain) return 1;
                 if (a.domain.en !== this.lastLearnedDomain && b.domain.en === this.lastLearnedDomain) return -1;
                 return Math.random() - 0.5;
             }).slice(0, this.visibleSparkCount);
 
             if (sparksToShow.length === 0 && unlearnedSparks.length === 0) {
-                const msg = this.currentLang === 'en' ? "Your quest for now is complete. Fresh knowledge awaits in the coming days." : "你目前的探索已完成。新的知识正在酝酿中。";
+                const msg = l === 'en' ? "Your quest for now is complete. Fresh knowledge awaits in the coming days." : "你目前的探索已完成。新的知识正在酝酿中。";
                 this.items.grid.innerHTML = `<div class="info-msg">${msg}</div>`;
                 return;
             }
-        } else {
-            // Recall view: all learned items
-            sparksToShow = this.allSparks.filter(spark => this.learnedIds.includes(spark.id));
-            if (sparksToShow.length === 0) {
-                const msg = this.currentLang === 'en' ? "You haven't learned any sparks yet. Start your discovery first!" : "你还没有学习任何火花。先去探索新知识吧！";
-                this.items.grid.innerHTML = `<div class="info-msg">${msg}</div>`;
-                return;
-            }
-        }
 
-        sparksToShow.forEach((spark) => {
+            sparksToShow.forEach((spark) => {
+                const card = document.createElement('div');
+                card.className = 'spark-card';
+                // v5.0 Aura check
+                const auraValue = this.auraLevels[spark.id] || 0;
+                if (auraValue > 0) {
+                    card.classList.add('has-aura');
+                    if (auraValue >= 5) card.classList.add('aura-high');
+                }
+
+                card.innerHTML = `
+                    <div class="spark-tag">${spark.tag[l]}</div>
+                    <h3 class="spark-title">${spark.title[l]}</h3>
+                    <p class="spark-preview">${spark.preview[l]}</p>
+                    <div class="spark-domain-label">${spark.domain[l]}</div>
+                `;
+                card.addEventListener('click', () => this.showDetail(spark));
+                this.items.grid.appendChild(card);
+            });
+        } else {
+            // v5.0 Knowledge Cosmos (Recall View)
+            const learnedSparks = this.allSparks.filter(spark => this.learnedIds.includes(spark.id));
+            if (learnedSparks.length === 0) {
+                const msg = l === 'en' ? "You haven't learned any sparks yet. Start your discovery first!" : "你还没有学习任何火花。先去探索新知识吧！";
+                this.items.grid.innerHTML = `<div class="info-msg">${msg}</div>`;
+                return;
+            }
+
+            const mastery = this.calculateMastery();
+            const cosmosGrid = document.createElement('div');
+            cosmosGrid.className = 'cosmos-grid';
+
+            Object.keys(mastery).forEach(domain => {
+                const data = mastery[domain];
+                if (data.learned === 0) return; // Only show domains with some progress
+
+                const card = document.createElement('div');
+                card.className = 'domain-mastery-card';
+
+                const percent = Math.round((data.learned / data.total) * 100);
+                const isMastered = data.learned === data.total;
+
+                // Domain Sparks Mapping
+                const domainSparks = this.allSparks.filter(s => s.domain.en === domain);
+                const sparksHtml = domainSparks.map(s => {
+                    const isLearned = this.learnedIds.includes(s.id);
+                    const auraLevel = this.auraLevels[s.id] || 0;
+                    let extraClass = isLearned ? 'learned' : '';
+                    if (auraLevel >= 5) extraClass += ' aura-gold';
+                    return `<div class="mini-spark ${extraClass}" title="${s.title[l]}"></div>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="mastery-header">
+                        <h3>${l === 'en' ? domain : data.zh}</h3>
+                        ${isMastered ? `<span class="badge">MASTERED</span>` : `<span class="badge">${data.learned}/${data.total}</span>`}
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: ${percent}%"></div>
+                    </div>
+                    <div class="sparks-list">
+                        ${sparksHtml}
+                    </div>
+                `;
+
+                card.addEventListener('click', () => {
+                    // Filter grid to show only sparks from this domain
+                    this.showDomainSparks(domain);
+                });
+                cosmosGrid.appendChild(card);
+            });
+            this.items.grid.appendChild(cosmosGrid);
+        }
+    }
+    showDomainSparks(domain) {
+        this.items.grid.innerHTML = '';
+        const l = this.currentLang;
+        const sparks = this.allSparks.filter(s => s.domain.en === domain && this.learnedIds.includes(s.id));
+
+        const backBtn = document.createElement('button');
+        backBtn.className = 'nav-btn active';
+        backBtn.style.marginBottom = '20px';
+        backBtn.textContent = l === 'en' ? '← Back to Cosmos' : '← 返回星空';
+        backBtn.onclick = () => this.renderSparks();
+        this.items.grid.appendChild(backBtn);
+
+        const innerGrid = document.createElement('div');
+        innerGrid.className = 'spark-grid';
+        sparks.forEach(spark => {
             const card = document.createElement('div');
             card.className = 'spark-card';
-            const l = this.currentLang;
+            const auraValue = this.auraLevels[spark.id] || 0;
+            if (auraValue > 0) {
+                card.classList.add('has-aura');
+                if (auraValue >= 5) card.classList.add('aura-high');
+            }
             card.innerHTML = `
                 <div class="spark-tag">${spark.tag[l]}</div>
                 <h3 class="spark-title">${spark.title[l]}</h3>
                 <p class="spark-preview">${spark.preview[l]}</p>
-                <div class="spark-domain-label">${spark.domain[l]}</div>
+                <div class="spark-domain-label">${spark.domain[l]} (${auraValue})</div>
             `;
             card.addEventListener('click', () => this.showDetail(spark));
-            this.items.grid.appendChild(card);
+            innerGrid.appendChild(card);
         });
+        this.items.grid.appendChild(innerGrid);
     }
 
     showDetail(spark) {
@@ -434,6 +530,8 @@ class IgnisApp {
 
             response = available[Math.floor(Math.random() * available.length)];
             this.currentSpark.sessionHistory.push(response);
+            // v5.0: Gain aura for deep discussion
+            this.increaseAura(this.currentSpark.id);
 
             this.addMessage(response, 'ai');
             this.isAiThinking = false;
