@@ -446,6 +446,32 @@ class IgnisApp {
         this.items.chatMessages.scrollTop = this.items.chatMessages.scrollHeight;
     }
 
+    increaseAura(sparkId) {
+        if (!this.auraLevels[sparkId]) this.auraLevels[sparkId] = 0;
+        if (this.auraLevels[sparkId] < 10) {
+            this.auraLevels[sparkId] += 1;
+            localStorage.setItem('ignis_aura', JSON.stringify(this.auraLevels));
+            // Sync aura level to cloud
+            if (this.syncState.token) this.syncProgress('push');
+        }
+    }
+
+    calculateMastery() {
+        const mastery = {};
+        this.allSparks.forEach(spark => {
+            const en = spark.domain.en;
+            const zh = spark.domain.zh;
+            if (!mastery[en]) {
+                mastery[en] = { learned: 0, total: 0, zh: zh };
+            }
+            mastery[en].total++;
+            if (this.learnedIds.includes(spark.id)) {
+                mastery[en].learned++;
+            }
+        });
+        return mastery;
+    }
+
     showTypingIndicator() {
         const indicator = document.createElement('div');
         indicator.className = 'typing';
