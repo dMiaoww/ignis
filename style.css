@@ -525,68 +525,109 @@ body {
 
 .bridge-card p {
     margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
 
-    .mastery-header .badge {
-        font-size: 0.7rem;
-        padding: 2px 8px;
-        border-radius: 10px;
-        background: var(--accent-light);
-        color: var(--accent-color);
-        font-weight: 800;
-    }
+/* v5.0 Knowledge Cosmos & Gamification */
+.cosmos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
 
-    .progress-bar-bg {
-        width: 100%;
-        height: 6px;
-        background: #f1f5f9;
-        border-radius: 10px;
-        overflow: hidden;
-    }
+.domain-mastery-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
 
-    .progress-bar-fill {
-        height: 100%;
-        background: var(--accent-color);
-        transition: width 1s ease-out;
-    }
+.domain-mastery-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
 
-    .sparks-list {
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
+.mastery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-    .mini-spark {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: #e2e8f0;
-        transition: var(--transition-smooth);
-    }
+.mastery-header h3 {
+    font-size: 1.1rem;
+    font-family: var(--font-display);
+    margin: 0;
+}
 
-    .mini-spark.learned {
-        background: var(--accent-color);
-    }
+.mastery-header .badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--accent-light);
+    color: var(--accent-color);
+    font-weight: 800;
+}
 
-    .mini-spark.aura-gold {
-        box-shadow: 0 0 10px #fbbf24;
-        background: #fbbf24;
-    }
+.progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
 
-    /* Spark Aura Effects in Cards */
-    .spark-card.has-aura::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 150%;
-        height: 150%;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(45, 90, 39, 0.05) 0%, transparent 70%);
-        pointer-events: none;
-        z-index: -1;
-    }
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent-color);
+    transition: width 1s ease-out;
+}
 
-    .spark-card.aura-high::after {
-        background: radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
-    }
+.sparks-list {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mini-spark {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    transition: var(--transition-smooth);
+}
+
+.mini-spark.learned {
+    background: var(--accent-color);
+}
+
+.mini-spark.aura-gold {
+    box-shadow: 0 0 10px #fbbf24;
+    background: #fbbf24;
+}
+
+/* Spark Aura Effects in Cards */
+.spark-card.has-aura::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(45, 90, 39, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.spark-card.aura-high::after {
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
+}
